@@ -17,8 +17,13 @@ export default {
     methods: {
         filterProducts(){
             this.$emit('filter-products', this.searchLine)
-        },
-    }
+        }
+    },
+    watch: {
+        searchLine() {
+        this.filterProducts();
+        }
+  }
 }
 </script>
 <style>
