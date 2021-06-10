@@ -5,7 +5,12 @@
       @filter-products="filterProducts"
     />
     <main>
-      <Cart :cartProducts="cartProducts" :isVisibleCart="isVisibleCart" />
+      <Cart
+        @remove-from-cart="removeFromCart"
+        :cartProducts="cartProducts"
+        :isVisibleCart="isVisibleCart"
+        @toggle-cart="changeCartVisibility"
+      />
       <ProductsList @add-to-cart="addToCart" :products="filteredProducts" />
     </main>
   </div>
@@ -16,8 +21,7 @@ import Header from "./components/Header";
 import Cart from "./components/Cart";
 import ProductsList from "./components/ProductsList";
 
-const API_URL =
-  "http://localhost:3000";
+const API_URL = "http://localhost:3000";
 
 export default {
   components: {
@@ -33,36 +37,41 @@ export default {
   }),
   mounted() {
     this.getProducts();
-    this.getCart()
+    this.getCart();
   },
   methods: {
     addToCart(item) {
-      this.makePOSTRequest(`${API_URL}/addToCart`, item)
-      .then(() => this.getCart())
+      this.makePOSTRequest(`${API_URL}/addToCart`, item).then(() =>
+        this.getCart()
+      );
+    },
+    removeFromCart(item) {
+      this.makePOSTRequest(`${API_URL}/removeFromCart`, item).then(() =>
+        this.getCart()
+      );
     },
     makeGETRequest(url) {
-      return fetch(url)
-        .then((data) => data.json())
+      return fetch(url).then((data) => data.json());
     },
     makePOSTRequest(url, data) {
       return fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data)
-      })
-        .then((data) => data.json())
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((data) => data.json());
     },
-    getProducts(){
-      this.makeGETRequest(`${API_URL}/catalogData`)
-       .then((data) => {
-          this.products = data;
-          this.filteredProducts = data;
-        });
+    getProducts() {
+      this.makeGETRequest(`${API_URL}/catalogData`).then((data) => {
+        this.products = data;
+        this.filteredProducts = data;
+      });
     },
-    getCart(){
-      this.makeGETRequest(`${API_URL}/cartData`)
-      .then((data) => {
-        this.cartProducts = data
-      })
+    getCart() {
+      this.makeGETRequest(`${API_URL}/cartData`).then((data) => {
+        this.cartProducts = data;
+      });
     },
     filterProducts(value) {
       let regexp = new RegExp(value, "i");

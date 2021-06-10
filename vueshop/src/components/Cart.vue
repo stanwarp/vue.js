@@ -1,8 +1,16 @@
 <template>
   <div class="cart">
     <div v-show="isVisibleCart" class="cart-list">
-      <div class="cart-list">
-        <h1>Корзина:</h1>
+      <button @click="$emit('toggle-cart')">Закрыть корзину</button>
+      <h1>Корзина:</h1>
+      <div
+        v-for="item in cartProducts"
+        :key="item.id_product"
+        class="cart-item"
+      >
+        <h3>{{ item.product_name }}</h3>
+        <p>{{ item.price }}</p>
+        <button @click="onClick(item)">Удалить</button>
       </div>
     </div>
   </div>
@@ -14,6 +22,15 @@ export default {
     isVisibleCart: {
       type: Boolean,
       default: false,
+    },
+    cartProducts: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  methods: {
+    onClick(item) {
+      this.$emit("remove-from-cart", item);
     },
   },
 };

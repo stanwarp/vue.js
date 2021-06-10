@@ -1,6 +1,5 @@
 <template>
   <div id="products">
-    Товары:
     <div v-for="item in products" :key="item.id_product" class="products-item">
       <img src="https://place-hold.it/150" alt="product image" />
       <h3>{{ item.product_name }}</h3>
