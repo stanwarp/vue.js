@@ -1,8 +1,10 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <Hello msg="Welcome to Yo3223ur Vue.js App"/>
-  <Data/>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png">
+    <Hello msg="Welcome to Yo3223ur Vue.js App"/>
+    <Data/>
     <div>footer</div>
+  </div>
 </template>
 
 <script>
