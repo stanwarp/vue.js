@@ -1,0 +1,24 @@
+1. Чтобы сделать сборку не минифицированной, добавил в файл webpack.config.js:
+{
+...,
+    optimization: {
+        minimize: false
+    },
+...
+}
+2. Чтобы перезапускать webpack при изменении файла, добавил флаг "-w" в файле package.json:
+"scripts": {
+    ...
+    "build": "webpack -w",
+    ...
+}
+Либо в файле webpack.config.js можно добавить строку:
+{
+...,
+    watch: true,
+...
+}
+Еще можно указать интервал перезапусков через watchOptions:
+    watchOptions: {
+        poll: 1000,
+    },
